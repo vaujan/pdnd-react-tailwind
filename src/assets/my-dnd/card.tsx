@@ -6,16 +6,17 @@ import {
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { type Card as CardType, getCardData } from './card-data';
 
-export default function Card(card: CardType) {
+interface CardProps extends CardType {
+  onCardReorder?: (draggedCard: any, targetCard: any) => void;
+}
+
+export default function Card({ onCardReorder, ...card }: CardProps) {
   const [isDragging, setIsDragging] = React.useState(false);
   const [isDropTarget, setIsDropTarget] = React.useState(false);
   const { description, title } = card;
   const ref = React.useRef<HTMLDivElement | null>(null);
 
-  // React.useEffect(() => {
-  //   console.log('is dragging:', isDragging);
-  // }, [isDragging]);
-
+  // TODO: dropping indicator
   React.useEffect(() => {
     const element = ref.current;
 
@@ -25,10 +26,10 @@ export default function Card(card: CardType) {
       draggable({
         element,
         getInitialData: () => getCardData(card),
-        onDragStart({ source }) {
+        onDragStart() {
           setIsDragging(true);
         },
-        onDrop({ source }) {
+        onDrop() {
           setIsDragging(false);
         },
       }),
@@ -56,6 +57,11 @@ export default function Card(card: CardType) {
           const dropTarget = self.data;
 
           console.log(`Card "${draggedCard.title}" dropped on card "${dropTarget.title}"`);
+
+          // Call the reorder function if provided
+          if (onCardReorder) {
+            onCardReorder(draggedCard, dropTarget);
+          }
         },
       }),
     );
