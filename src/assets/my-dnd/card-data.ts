@@ -39,3 +39,7 @@ export const initialCards: Card[] = [
   { id: 'card-5', title: 'Testing Suite', description: 'Write unit tests', columnId: 'done' },
   { id: 'card-6', title: 'Documentation', description: 'Write API docs', columnId: 'done' },
 ];
+
+export const isCardData = (data: Record<string, unknown>): data is { type: string; id: string } => {
+  return data.type === 'card' && typeof data.id === 'string';
+};
