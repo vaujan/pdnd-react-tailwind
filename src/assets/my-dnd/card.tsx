@@ -11,6 +11,7 @@ import {
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 // import DropIndicator from './drop-indicator';
 import { SimpleDropIndicator } from './simple-drop-indicator';
+import { easeOut, motion } from 'framer-motion';
 
 interface CardProps {
   card: CardType;
@@ -23,7 +24,6 @@ export default function Card({ card }: CardProps) {
   const { description, title } = card;
   const ref = React.useRef<HTMLDivElement | null>(null);
 
-  // TODO: dropping indicator
   React.useEffect(() => {
     const element = ref.current;
 
@@ -82,7 +82,14 @@ export default function Card({ card }: CardProps) {
   }, [card.id]);
 
   return (
-    <div className=" relative">
+    <motion.div
+      layout // This makes reordering smooth!
+      transition={{ ease: easeOut, duration: 0.3 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0, scale: isDragging ? 0.99 : 1, animationDuration: 0.3 }}
+      exit={{ opacity: 0, y: -20 }}
+      className=" relative"
+    >
       {/* Here goes the top droptarget */}
       {isDropTarget && closestEdge === 'top' && <SimpleDropIndicator edge={closestEdge} />}
       <div
@@ -95,6 +102,6 @@ export default function Card({ card }: CardProps) {
 
       {/* Here goes the bottom droptarget */}
       {isDropTarget && closestEdge === 'bottom' && <SimpleDropIndicator edge={closestEdge} />}
-    </div>
+    </motion.div>
   );
 }
