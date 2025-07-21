@@ -55,9 +55,11 @@ export default function MyDnd() {
         {/* map cards here */}
         <div className="flex p-2 bg-gray-200 rounded-xl flex-col w-[350px]">
           <h3 className="mb-3 font-medium">column title</h3>
-          {cards.map((card) => (
-            <Card key={card.id} card={card} />
-          ))}
+          <div className="flex flex-col w-full gap-2">
+            {cards.map((card) => (
+              <Card key={card.id} card={card} />
+            ))}
+          </div>
           <div className="bg-red-200 text-red-500 flex justify-center items-center p-3 rounded-lg w-full h-30">
             <Trash size={16} />
           </div>

@@ -9,6 +9,8 @@ import {
   attachClosestEdge,
   extractClosestEdge,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+// import DropIndicator from './drop-indicator';
+import { SimpleDropIndicator } from './simple-drop-indicator';
 
 interface CardProps {
   card: CardType;
@@ -17,6 +19,7 @@ interface CardProps {
 export default function Card({ card }: CardProps) {
   const [isDragging, setIsDragging] = React.useState(false);
   const [isDropTarget, setIsDropTarget] = React.useState(false);
+  const [closestEdge, setClosestEdge] = React.useState<string | null>(null);
   const { description, title } = card;
   const ref = React.useRef<HTMLDivElement | null>(null);
 
@@ -53,44 +56,45 @@ export default function Card({ card }: CardProps) {
           });
         },
         getIsSticky: () => true,
-        onDragEnter() {
+        onDragEnter({ self }) {
           setIsDropTarget(true);
+          // Extract the page for visual feedback
+          const edge = extractClosestEdge(self.data);
+          setClosestEdge(edge);
+        },
+        onDrag({ self }) {
+          // Updating the closest edge while dragging
+          const edge = extractClosestEdge(self.data);
+          setClosestEdge(edge);
         },
         onDragLeave() {
           setIsDropTarget(false);
+          setClosestEdge(null);
         },
         onDrop() {
           setIsDropTarget(false);
+          setClosestEdge(null);
         },
       }),
     );
 
     return cleanup;
-  }, []);
-
-  if (isDropTarget) {
-    return (
-      <div className="relative">
-        <div
-          ref={ref}
-          className={`bg-gray-400/50 text-gray-400/50 flex-col mb-2 flex p-2 rounded-md border-gray-400`}
-        >
-          <span className="invisible">{title}</span>
-          <p className="invisible">{description}</p>
-        </div>
-      </div>
-    );
-  }
+  }, [card.id]);
 
   return (
-    <div className="relative">
+    <div className=" relative">
+      {/* Here goes the top droptarget */}
+      {isDropTarget && closestEdge === 'top' && <SimpleDropIndicator edge={closestEdge} />}
       <div
         ref={ref}
-        className={`${isDragging ? 'bg-blue-200' : 'bg-white'} flex-col mb-2 flex p-2 rounded-md border-gray-400`}
+        className={`${isDragging ? 'bg-blue-200' : 'bg-white'} ${isDropTarget ? 'ring-2 ring-blue-500' : ''} flex-col flex p-2 rounded-md border-gray-400`}
       >
         <span>{title}</span>
         <p className=" text-gray-500">{description}</p>
       </div>
+
+      {/* Here goes the bottom droptarget */}
+      {isDropTarget && closestEdge === 'bottom' && <SimpleDropIndicator edge={closestEdge} />}
     </div>
   );
 }
