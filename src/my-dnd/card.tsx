@@ -4,12 +4,11 @@ import {
   dropTargetForElements,
 } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
-import { type Card as CardType, getCardData } from './card-data';
+import { type allowedEdges, type Card as CardType, getCardData } from './card-data';
 import {
   attachClosestEdge,
   extractClosestEdge,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
-// import DropIndicator from './drop-indicator';
 import { SimpleDropIndicator } from './simple-drop-indicator';
 import { easeOut, motion } from 'framer-motion';
 
@@ -20,7 +19,7 @@ interface CardProps {
 export default function Card({ card }: CardProps) {
   const [isDragging, setIsDragging] = React.useState(false);
   const [isDropTarget, setIsDropTarget] = React.useState(false);
-  const [closestEdge, setClosestEdge] = React.useState<string | null>(null);
+  const [closestEdge, setClosestEdge] = React.useState<allowedEdges | null>(null);
   const { description, title } = card;
   const ref = React.useRef<HTMLDivElement | null>(null);
 
@@ -83,7 +82,7 @@ export default function Card({ card }: CardProps) {
 
   return (
     <motion.div
-      layout // This makes reordering smooth!
+      layout // makes reordering smooth!
       transition={{ ease: easeOut, duration: 0.3 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0, scale: isDragging ? 0.99 : 1, animationDuration: 0.3 }}

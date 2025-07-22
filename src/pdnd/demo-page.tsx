@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { List } from './list';
 import { KanbanBoard } from './kanban-board';
-import MyDnd from './assets/my-dnd/my-dnd';
+import MyDnd from '../my-dnd/my-dnd';
 
 type DemoMode = 'single-column' | 'multi-column' | 'my-dnd';
 
 export function DemoPage() {
-  const [mode, setMode] = useState<DemoMode>('multi-column');
+  const [mode, setMode] = useState<DemoMode>('my-dnd');
 
   return (
     <div className="min-h-screen bg-gray-50">
