@@ -1,6 +1,6 @@
-import Card from './card';
-import { initialData, isCardData } from './card-data';
 import React from 'react';
+import { initialData } from './card-data';
+import Card from './card';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { flushSync } from 'react-dom';

@@ -1,5 +1,3 @@
-import card from './card';
-
 export interface Card {
   id: string;
   title: string;
@@ -40,7 +38,7 @@ export const initialCards: Card[] = [
     description: 'Create wireframes and mockups',
     columnId: 'todo',
   },
-  { id: 'card-2', title: 'Setup Database', description: 'Configure PostgreSQL', columnId: 'todo' },
+  { id: 'card-2', title: 'Setup Database', description: 'Configure Postgre', columnId: 'todo' },
   {
     id: 'card-3',
     title: 'User Authentication',

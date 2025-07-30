@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { List } from './list';
 import { KanbanBoard } from './kanban-board';
-import MyDnd from '../my-dnd/my-dnd';
+import MyDnd from './my-dnd/my-dnd';
 
 type DemoMode = 'single-column' | 'multi-column' | 'my-dnd';
 
@@ -15,7 +15,7 @@ export function DemoPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Pragmatic Drag and Drop Demo</h1>
+              <h1 className="text-1xl font-bold text-gray-900">Pragmatic Drag and Drop Demo</h1>
               <p className="text-gray-600 mt-1">
                 Learn how PdnD works with different implementations
               </p>

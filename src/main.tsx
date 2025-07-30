@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { DemoPage } from './pdnd/demo-page';
+import { DemoPage } from './demo-page';
 import './index.css';
 import invariant from 'tiny-invariant';
 
